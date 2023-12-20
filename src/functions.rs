@@ -29,13 +29,18 @@ where
 /// Apply a function call to the conversation.
 pub fn apply(name: &str, arguments: &str) -> String {
     let result = match name {
-        // "f" => list_files(arguments),
-        // "F" => read_file(arguments),
         "list_source_files" => list_source_files(),
         "patch_file" => patch_file::patch_file(arguments),
         "read_file" => read_file(arguments),
-        // "g" => list_commits(arguments),
-        // "G" => show_commit(arguments),
+        "create_file" => {
+            // Parse the arguments as JSON
+            let args: serde_json::Value = serde_json::from_str(arguments).unwrap();
+            // Extract the path
+            let path = args["path"].as_str().unwrap();
+            // Create the file
+            std::fs::File::create(path).unwrap();
+            Ok("blah".to_string())
+        }
         _ => Err(format!("no such function: `{name}`")),
     };
     if result.is_err() {
