@@ -107,21 +107,33 @@ pub fn list_files(arguments: &str) -> Result<String, String> {
 }
 
 pub fn list_source_files() -> Result<String, String> {
-    let entries = glob::glob("**/*.rs")
-        .expect("Failed to read glob pattern")
-        .into_iter()
-        .map(|e| e.unwrap().to_str().unwrap().to_string())
-        .collect_vec();
-    println!("{entries:?}");
-    let lines = entries.join("\n");
-    Ok(lines)
+    use std::process::Command;
+    let output = Command::new("git")
+        .args([&"ls-files"])
+        .output()
+        .expect("Failed to execute git ls-files");
 
-    // #[derive(serde::Deserialize)]
-    // struct Arguments {
-    //     path: String,
-    // }
-    // let Arguments { path } = serde_json::from_str(arguments).map_err(|err| err.to_string())?;
+    if !output.status.success() {
+        return Err(format!(
+            "git ls-files failed: {}",
+            String::from_utf8_lossy(&output.stderr)
+        ));
+    }
+
+    let lines = String::from_utf8(output.stdout)
+        .expect("Failed to parse git ls-files output as UTF-8")
+        .trim()
+        .to_owned();
+    dbg!(&lines);
+
+    Ok(lines)
 }
+
+// #[derive(serde::Deserialize)]
+// struct Arguments {
+//     path: String,
+// }
+// let Arguments { path } = serde_json::from_str(arguments).map_err(|err| err.to_string())?;
 
 #[cfg(test)]
 mod test {
