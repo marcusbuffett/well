@@ -15,7 +15,7 @@ Do not ask for permission to patch a file, just do it.
 
 /// List all the functions as a JSON schema understood by the model.
 pub fn all_functions() -> serde_json::Value {
-json!([
+    json!([
         {"name": "list_source_files", "description": "list all source files", "parameters": {
             "type": "object",
             "properties": {},
@@ -36,10 +36,5 @@ json!([
             "properties": { "path": { "type": "string", "description": "relative path to the file to read" } },
             "required": ["path"],
         }},
-        {"name": "create_file", "description": "create a file with a specified path", "parameters": {
-            "type": "object",
-            "properties": { "path": { "type": "string", "description": "relative path to the file to create" } },
-            "required": ["path"],
-        }}
     ])
 }
