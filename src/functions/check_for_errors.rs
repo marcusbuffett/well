@@ -20,14 +20,16 @@ pub fn check_for_errors(arguments: &str) -> Result<String, String> {
 
     let output_str = if !stderr.is_empty() { stderr } else { stdout };
     if !output.status.success() {
-        if output_str.lines().collect_vec().len() > 50 {
-            return Ok(format!(
+        let final_output = if output_str.lines().collect_vec().len() > 50 {
+            Ok(format!(
                 "Output limited to 50 lines: {}...",
                 output_str.lines().take(50).join("\n")
-            ));
+            ))
         } else {
-            return Ok(output_str);
-        }
+            Ok(output_str)
+        };
+        println!("{:?}", final_output);
+        return final_output;
     }
 
     Ok("No errors".to_string())

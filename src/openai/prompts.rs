@@ -60,6 +60,15 @@ pub fn all_functions() -> serde_json::Value {
             "type": "object",
             "properties": {},
             "required": [],
+        }},
+        {"name": "search_and_replace", "description": "search for a string and replace it in the codebase", "parameters": {
+            "type": "object",
+            "properties": {
+                "search": { "type": "string", "description": "the string to search for" },
+                "replace": { "type": "string", "description": "the string to replace with" },
+                "path": { "type": "string", "description": "relative path to the file" }
+            },
+            "required": ["search", "replace", "path"]
         }}
     ])
 }
