@@ -30,3 +30,31 @@ pub fn patch_file(arguments: &str) -> Result<String, String> {
 
     Ok("File patched!".to_string())
 }
+
+pub fn insert_lines(arguments: &str) -> Result<String, String> {
+    #[derive(serde::Deserialize)]
+    struct Arguments {
+        path: String,
+        after_line: u32,
+        code: String,
+    }
+    let Arguments {
+        path,
+        after_line,
+        code,
+    } = serde_json::from_str(arguments).map_err(|err| err.to_string())?;
+
+    println!("Inserting code into {}, after {}", path, after_line);
+    let contents = std::fs::read_to_string(Path::new(&path)).map_err(|err| err.to_string())?;
+    let lines = contents.lines();
+    let new_lines = lines
+        .clone()
+        .take(after_line as usize)
+        .chain(code.lines().into_iter())
+        .chain(lines.skip(after_line as usize))
+        .collect::<Vec<_>>();
+    fs::write(&path, new_lines.join("\n")).map_err(|err| err.to_string())?;
+    println!("Code inserted!");
+
+    Ok("File patched!".to_string())
+}
