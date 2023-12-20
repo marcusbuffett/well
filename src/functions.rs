@@ -9,6 +9,9 @@ mod list_files;
 mod patch_file;
 mod read_file;
 mod show_commit;
+mod search_replace;
+
+use search_replace::search_replace;
 
 use list_files::list_source_files;
 use read_file::read_file;
@@ -33,6 +36,7 @@ pub fn apply(name: &str, arguments: &str) -> String {
         "read_file" => read_file(arguments),
         "check_for_errors" => check_for_errors::check_for_errors(arguments),
         "create_file" => create_file::create_file(arguments),
+        "search_replace" => search_replace(arguments),
         _ => Err(format!("no such function: `{name}`")),
     };
     if result.is_err() {
