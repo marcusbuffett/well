@@ -3,7 +3,9 @@ use std::env;
 /// Try to read `OPENAI_SECRET_KEY` from environment variables.
 pub fn secret_key_from_env() -> Option<String> {
     None.or_else(|| env::var("WELL_OPENAI_SECRET_KEY").ok())
+        .or_else(|| env::var("BLAH").ok())
         .or_else(|| env::var("WELL_OPENAI_SECRET").ok())
+        .or_else(|| env::var("OPENAI_API_KEY").ok())
         .or_else(|| env::var("OPENAI_SECRET_KEY").ok())
         .or_else(|| env::var("OPENAI_SECRET").ok())
 }

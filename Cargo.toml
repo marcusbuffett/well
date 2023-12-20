@@ -11,6 +11,8 @@ edition = "2021"
 colored = "2"
 dotenvy = "0.15"
 git2 = { version = "0.17", features = ["vendored-libgit2", "vendored-openssl"] }
+glob = "0.3.1"
+itertools = "0.12.0"
 reqwest = { version = "0.11", features = ["json"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"

@@ -5,6 +5,8 @@ use std::{
     path::Path,
 };
 
+use itertools::Itertools;
+
 /// True if the path goes above the current directory.
 fn path_spills_up<PathRef: AsRef<Path>>(path: PathRef) -> bool {
     let mut depth = 0;
@@ -102,6 +104,23 @@ pub fn list_files(arguments: &str) -> Result<String, String> {
     let Arguments { path } = serde_json::from_str(arguments).map_err(|err| err.to_string())?;
 
     list_files_with_path(Path::new(&path)).map_err(|err| err.to_string())
+}
+
+pub fn list_source_files() -> Result<String, String> {
+    let entries = glob::glob("**/*.rs")
+        .expect("Failed to read glob pattern")
+        .into_iter()
+        .map(|e| e.unwrap().to_str().unwrap().to_string())
+        .collect_vec();
+    println!("{entries:?}");
+    let lines = entries.join("\n");
+    Ok(lines)
+
+    // #[derive(serde::Deserialize)]
+    // struct Arguments {
+    //     path: String,
+    // }
+    // let Arguments { path } = serde_json::from_str(arguments).map_err(|err| err.to_string())?;
 }
 
 #[cfg(test)]
