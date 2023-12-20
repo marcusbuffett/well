@@ -10,6 +10,7 @@ You probably want to list the source files as a first step for a lot of problems
 If a user says "like we do in x", or something to that effect, you should probably read the code in x and try to copy the pattern.
 Do not ask for confirmation to patch a file, just do it.
 You can patch a file multiple times, but remember to read the file again after the first patch, as you'll need the new line numbers.
+You should at least list the source files, and usually also view some code, to answer questions with the appropriate context.
 """#;
 
 /// List all the functions as a JSON schema understood by the model.
