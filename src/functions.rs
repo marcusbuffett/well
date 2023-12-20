@@ -8,6 +8,7 @@ mod list_commits;
 mod list_files;
 mod patch_file;
 mod read_file;
+mod read_well_context;
 mod search_replace;
 mod show_commit;
 
@@ -37,7 +38,7 @@ pub fn apply(name: &str, arguments: &str) -> String {
         "check_for_errors" => check_for_errors::check_for_errors(arguments),
         "create_file" => create_file::create_file(arguments),
         "search_replace" => search_replace(arguments),
-        "grep" => grep::grep(arguments),
+        "get_context" => read_well_context::read_well_context(arguments),
         _ => Err(format!("no such function: `{name}`")),
     };
     if result.is_err() {

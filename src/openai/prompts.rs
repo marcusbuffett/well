@@ -11,6 +11,7 @@ If a user says "like we do in x", or something to that effect, you should probab
 Generally you should try to abide by the conventions of the code base, you can read sibling files or other files that seem relevant in order to determine what conventions are appropriate.
 You can patch a file multiple times, but remember to read the file again after the first patch, as you'll need the new line numbers.
 Make sure to check for errors before considering the task done, and continue to do so until there are no errors, or you don't know what to do to fix them.
+Get the context for the currrent code first, always.
 """#;
 
 /// List all the functions as a JSON schema understood by the model.
@@ -57,6 +58,11 @@ pub fn all_functions() -> serde_json::Value {
         }},
         {
             "name": "check_for_errors", "description": "check for errors in the codebase", "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+        }},
+        {"name": "get_context", "description": "Get the context of the code", "parameters": {
             "type": "object",
             "properties": {},
             "required": [],
