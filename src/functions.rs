@@ -18,6 +18,7 @@ mod review_changes;
 mod say;
 mod search_replace;
 mod show_commit;
+pub mod rename_file;
 
 use read_file_range::read_file_range;
 
@@ -59,6 +60,7 @@ pub fn apply(name: &str, arguments: &str) -> String {
         "grep" => grep::grep(arguments),
         "say" => say::say(arguments),
         "commit_changes" => commit_changes::commit_changes(arguments),
+        "rename_file" => rename_file::rename_file(arguments),
         _ => Err(format!("no such function: `{name}`")),
     };
     if result.is_err() {

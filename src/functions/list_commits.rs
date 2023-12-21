@@ -1,15 +1,11 @@
 /* spell-checker:words revwalk */
 
 pub fn list_commits(_arguments: &str) -> Result<String, String> {
-    dbg!("<<<");
     let repo = git2::Repository::discover(".").map_err(|err| err.to_string())?;
-    dbg!(">>>");
 
-    dbg!(repo.path());
 
     let mut result = String::new();
     for rev in repo.revwalk().map_err(|err| err.to_string())?.take(11) {
-        dbg!(&rev);
         let rev = rev.map_err(|err| err.to_string())?;
         let commit = repo.find_commit(rev).map_err(|err| err.to_string())?;
         let date = commit.time().seconds();

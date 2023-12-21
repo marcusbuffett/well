@@ -124,7 +124,6 @@ pub fn list_source_files() -> Result<String, String> {
         .expect("Failed to parse git ls-files output as UTF-8")
         .trim()
         .to_owned();
-    dbg!(&lines);
 
     Ok(lines)
 }

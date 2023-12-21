@@ -8,7 +8,6 @@ pub fn patch_file(arguments: &str) -> Result<String, String> {
         end_line: u32,
         code: String,
     }
-    dbg!(arguments);
     let Arguments {
         path,
         start_line,

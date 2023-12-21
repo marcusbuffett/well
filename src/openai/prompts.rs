@@ -133,5 +133,13 @@ pub fn all_functions() -> serde_json::Value {
             },
             "required": ["text"],
         }},
+{"name": "rename_file", "description": "rename a file, taking a source and a destination", "parameters": {
+    "type": "object",
+    "properties": {
+        "source": { "type": "string", "description": "the relative path to the source file" },
+        "destination": { "type": "string", "description": "the relative path to the destination file" }
+    },
+    "required": ["source", "destination"]
+}}
     ])
 }
