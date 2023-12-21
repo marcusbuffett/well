@@ -4,9 +4,10 @@ use itertools::Itertools;
 
 pub fn check_for_errors(arguments: &str) -> Result<String, String> {
     // Read the contents of the ".well/compile" file
-    let compile_command = std::fs::read_to_string(".well/compile")
-        .map_err(|err| err.to_string())
-        .or::<String>(Ok("No context file".to_string()))?;
+    let compile_command = std::fs::read_to_string(".well/compile").map_err(|err| err.to_string());
+    let Ok(compile_command) = compile_command else {
+        return Ok("Cannot check for errors".to_string());
+    };
 
     // Run the compile command as a shell command
     let output = Command::new("sh")
@@ -29,7 +30,7 @@ pub fn check_for_errors(arguments: &str) -> Result<String, String> {
         } else {
             Ok(output_str)
         };
-// println!("{:?}", final_output);
+        // println!("{:?}", final_output);
         return final_output;
     }
 

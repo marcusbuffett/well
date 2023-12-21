@@ -18,128 +18,130 @@ When investigating an error, you should use read_file_around to see the broader 
 You can review_changes at any point, to see what you've done.
 If in doubt, feel free to reset a file to revert your changes, and start over.
 The read commands will output code where each line starts with a line number.
+Try to avoid reading too many lines, it's better to read a few times than to read a 1000+ line file.
 """#;
 
 /// List all the functions as a JSON schema understood by the model.
 pub fn all_functions() -> serde_json::Value {
     json!([
-        {"name": "list_source_files", "description": "list all source files", "parameters": {
-            "type": "object",
-            "properties": {},
-            "required": [],
-        }},
-        // {"name": "update_file", "description": "update file contents", "parameters": {
-        //     "type": "object",
-        //     "properties": {
-        //         "path": { "type": "string", "description": "relative path to the file" },
-        //         "code": { "type": "string", "description": "the code to insert" },
-        //         "start_line": { "type": "number", "description": "the line number to start changing code from" },
-        //         "end_line": { "type": "number", "description": "the line number to stop changing code at" },
-        //     },
-        //     "required": ["path", "code", "start_line", "end_line"],
-        // }},
-        {"name": "insert_lines", "description": "insert lines into a file, after a given line number", "parameters": {
-            "type": "object",
-            "properties": {
-                "path": { "type": "string", "description": "relative path to the file" },
-                "code": { "type": "string", "description": "the code to insert" },
-                "after_line": { "type": "number", "description": "the line number to insert after" },
-            },
-            "required": [],
-        }},
-        {"name": "delete_lines", "description": "delete lines from a file", "parameters": {
-            "type": "object",
-            "properties": {
-                "path": { "type": "string", "description": "the relative path to the file" },
-                "start_line": { "type": "number", "description": "the first line number to delete" },
-                "end_line": { "type": "number", "description": "the last line number to delete" },
-            },
-            "required": ["path", "start_line", "end_line"],
-        }},
-        {"name": "read_file", "description": "read file", "parameters": {
-            "type": "object",
-            "properties": { "path": { "type": "string", "description": "relative path to the file to read" } },
-            "required": ["path"],
-        }},
-        {
-            "name": "read_file_range", "description": "read a range of lines from a file", "parameters": {
+            {"name": "list_source_files", "description": "list all source files", "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            }},
+            // {"name": "update_file", "description": "update file contents", "parameters": {
+            //     "type": "object",
+            //     "properties": {
+            //         "path": { "type": "string", "description": "relative path to the file" },
+            //         "code": { "type": "string", "description": "the code to insert" },
+            //         "start_line": { "type": "number", "description": "the line number to start changing code from" },
+            //         "end_line": { "type": "number", "description": "the line number to stop changing code at" },
+            //     },
+            //     "required": ["path", "code", "start_line", "end_line"],
+            // }},
+            {"name": "insert_lines", "description": "insert lines into a file, after a given line number", "parameters": {
                 "type": "object",
                 "properties": {
                     "path": { "type": "string", "description": "relative path to the file" },
-                    "start_line": { "type": "number", "description": "the start line number" },
-                    "end_line": { "type": "number", "description": "the end line number" }
+                    "code": { "type": "string", "description": "the code to insert" },
+                    "after_line": { "type": "number", "description": "the line number to insert after" },
                 },
-                "required": ["path", "line_number", "number_of_lines"]
-            }
-        },
-        {
-            "name": "read_file_around", "description": "read a file around a specific line number", "parameters": {
+                "required": [],
+            }},
+            {"name": "delete_lines", "description": "delete lines from a file", "parameters": {
                 "type": "object",
                 "properties": {
-                    "path": { "type": "string", "description": "relative path to the file" },
-                    "line_number": { "type": "number", "description": "the line number" },
-                    "context_lines": { "type": "number", "description": "the number of lines up and down to read" }
+                    "path": { "type": "string", "description": "the relative path to the file" },
+                    "start_line": { "type": "number", "description": "the first line number to delete" },
+                    "end_line": { "type": "number", "description": "the last line number to delete" },
                 },
-                "required": ["path", "line_number"]
-            }
+                "required": ["path", "start_line", "end_line"],
+            }},
+            {"name": "read_file", "description": "read file", "parameters": {
+                "type": "object",
+                "properties": { "path": { "type": "string", "description": "relative path to the file to read" } },
+                "required": ["path"],
+            }},
+            {
+                "name": "read_file_range", "description": "read a range of lines from a file", "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "path": { "type": "string", "description": "relative path to the file" },
+                        "start_line": { "type": "number", "description": "the start line number" },
+                        "end_line": { "type": "number", "description": "the end line number" }
+                    },
+                    "required": ["path", "line_number", "number_of_lines"]
+                }
+            },
+            {
+                "name": "read_file_around", "description": "read a file around a line number", "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "path": { "type": "string", "description": "relative path to the file" },
+                        "line_number": { "type": "number", "description": "the line number" },
+                        "context_lines": { "type": "number", "description": "the number of lines up and down to read, up to 200" }
+                    },
+                    "required": ["path", "line_number"]
+                }
+            },
+            {"name": "create_file", "description": "create a file with a path", "parameters": {
+                "type": "object",
+                "properties": { "path": { "type": "string", "description": "relative path to the file" } },
+                "required": ["path"],
+            }},
+            {"name": "grep", "description": "search for a string in the codebase or file", "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": { "type": "string", "description": "the string to search for" },
+                    "path": { "type": "string", "description": "optional path to a file to search" }
+                },
+                "required": ["query"],
+            }},
+            {
+                "name": "check_for_errors", "description": "check for errors in the codebase", "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            }},
+            {"name": "review_changes", "description": "Review the changes made to the codebase", "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            }},
+            {"name": "get_context", "description": "Get the context of the code", "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            }},
+            // {"name": "search_and_replace", "description": "search for a string and replace it in the codebase", "parameters": {
+            //     "type": "object",
+            //     "properties": {
+            //         "search": { "type": "string", "description": "the string to search for" },
+            //         "replace": { "type": "string", "description": "the string to replace with" },
+            //         "path": { "type": "string", "description": "relative path to the file" }
+            //     },
+            //     "required": ["search", "replace", "path"]
+            // }},
+            {"name": "commit_changes", "description": "stage and commit all changes", "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            }},
+            {"name": "say", "description": "use the say command to speak text out loud", "parameters": {
+                "type": "object",
+                "properties": {
+                    "text": { "type": "string", "description": "the text to speak" }
+                },
+                "required": ["text"],
+            }},
+    {"name": "rename_file", "description": "rename a file, taking a source and a destination", "parameters": {
+        "type": "object",
+        "properties": {
+            "source": { "type": "string", "description": "the relative path to the source file" },
+            "destination": { "type": "string", "description": "the relative path to the destination file" }
         },
-        {"name": "create_file", "description": "create a file with a path", "parameters": {
-            "type": "object",
-            "properties": { "path": { "type": "string", "description": "relative path to the file" } },
-            "required": ["path"],
-        }},
-        {"name": "grep", "description": "search for a string in the codebase or file", "parameters": {
-            "type": "object",
-            "properties": {
-                "query": { "type": "string", "description": "the string to search for" },
-                "path": { "type": "string", "description": "optional path to a file to search" }
-            },
-            "required": ["query"],
-        }},
-        {
-            "name": "check_for_errors", "description": "check for errors in the codebase", "parameters": {
-            "type": "object",
-            "properties": {},
-            "required": [],
-        }},
-        {"name": "review_changes", "description": "Review the changes made to the codebase", "parameters": {
-            "type": "object",
-            "properties": {},
-            "required": [],
-        }},
-        {"name": "get_context", "description": "Get the context of the code", "parameters": {
-            "type": "object",
-            "properties": {},
-            "required": [],
-        }},
-        {"name": "search_and_replace", "description": "search for a string and replace it in the codebase", "parameters": {
-            "type": "object",
-            "properties": {
-                "search": { "type": "string", "description": "the string to search for" },
-                "replace": { "type": "string", "description": "the string to replace with" },
-                "path": { "type": "string", "description": "relative path to the file" }
-            },
-            "required": ["search", "replace", "path"]
-        }},
-        {"name": "commit_changes", "description": "stage and commit all changes", "parameters": {
-            "type": "object",
-            "properties": {},
-            "required": [],
-        }},
-        {"name": "say", "description": "use the say command to speak text out loud", "parameters": {
-            "type": "object",
-            "properties": {
-                "text": { "type": "string", "description": "the text to speak" }
-            },
-            "required": ["text"],
-        }},
-{"name": "rename_file", "description": "rename a file, taking a source and a destination", "parameters": {
-    "type": "object",
-    "properties": {
-        "source": { "type": "string", "description": "the relative path to the source file" },
-        "destination": { "type": "string", "description": "the relative path to the destination file" }
-    },
-    "required": ["source", "destination"]
-}}
-    ])
+        "required": ["source", "destination"]
+    }}
+        ])
 }
+

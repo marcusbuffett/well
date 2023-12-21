@@ -13,12 +13,12 @@ mod patch_file;
 mod read_file;
 mod read_file_range;
 mod read_well_context;
+pub mod rename_file;
 mod reset_file;
 mod review_changes;
 mod say;
 mod search_replace;
 mod show_commit;
-pub mod rename_file;
 
 use read_file_range::read_file_range;
 

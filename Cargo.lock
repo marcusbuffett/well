@@ -111,6 +111,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e496a50fda8aacccc86d7529e2c1e0892dbd0f898a6b5645b5561b89c3210efa"
 
 [[package]]
+name = "dev-intern"
+version = "0.0.0"
+dependencies = [
+ "colored",
+ "dotenvy",
+ "git2",
+ "glob",
+ "itertools",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "tokio",
+]
+
+[[package]]
 name = "dotenvy"
 version = "0.15.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1143,21 +1158,6 @@ checksum = "5db499c5f66323272151db0e666cd34f78617522fb0c1604d31a27c50c206a85"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
-]
-
-[[package]]
-name = "well"
-version = "0.0.0"
-dependencies = [
- "colored",
- "dotenvy",
- "git2",
- "glob",
- "itertools",
- "reqwest",
- "serde",
- "serde_json",
- "tokio",
 ]
 
 [[package]]

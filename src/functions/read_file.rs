@@ -9,11 +9,10 @@ pub fn read_file(arguments: &str) -> Result<String, String> {
 
     let contents = std::fs::read_to_string(Path::new(&path)).map_err(|err| err.to_string())?;
     let num_lines = contents.lines().count();
-    if num_lines > 150 {
+    if num_lines > 300 {
         return Err(format!(
-            "File {} contains {} lines, which is too many, use other read methods, or grep this file.",
-            path,
-            num_lines
+            "File {} contains {} lines, which is too many, use other read methods or grep instead.",
+            path, num_lines
         ));
     }
     let contents_with_line_numbers =

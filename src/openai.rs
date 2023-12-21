@@ -50,16 +50,18 @@ impl Chat {
     {
         let address = format!("https://api.openai.com/v1/{endpoint}");
 
-        let response: Response = self
-            .client
-            .post(address)
-            .json(body)
-            .send()
-            .await?
-            .json()
-            .await?;
+        let response_raw = self.client.post(address).json(body).send().await?;
+        let response_text = response_raw.text().await?;
+        let response_json: Result<Response, serde_json::Error> =
+            serde_json::from_str(&response_text);
 
-        Ok(response)
+        match response_json {
+            Ok(response) => Ok(response),
+            Err(error) => {
+                eprintln!("{error:#?}, {response_text:#?}");
+                Err(Box::new(error))
+            }
+        }
     }
 
     /// Generate the next message in the conversation.
