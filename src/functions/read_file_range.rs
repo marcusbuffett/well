@@ -61,7 +61,6 @@ pub fn read_file_around(arguments: &str) -> Result<String, String> {
     let end_line = std::cmp::min(lines.len(), end_line);
 
     let range = start_line - 1..end_line;
-    dbg!(&range, &start_line, &end_line);
     let contents_with_line_numbers = range
         .map(|i| format!("{}: {}", i + 1, lines[i]))
         .collect::<Vec<String>>()

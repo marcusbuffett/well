@@ -27,7 +27,6 @@ mod tests {
     #[test]
     #[ignore = "run manually to see output"]
     fn commits_listing_format() {
-        dbg!("here");
         let result = list_commits(".").unwrap();
         assert_eq!(result, "Initial commit\n");
     }
