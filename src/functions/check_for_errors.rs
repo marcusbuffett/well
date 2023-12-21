@@ -4,7 +4,7 @@ use itertools::Itertools;
 
 pub fn check_for_errors(arguments: &str) -> Result<String, String> {
     // Read the contents of the ".well/compile" file
-    let compile_command = std::fs::read_to_string(".well/context")
+    let compile_command = std::fs::read_to_string(".well/compile")
         .map_err(|err| err.to_string())
         .or::<String>(Ok("No context file".to_string()))?;
 

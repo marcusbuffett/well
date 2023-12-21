@@ -1,0 +1,1 @@
+rg --heading "\bfn\b|\bstruct\b|\benum\b|\btrait\b"

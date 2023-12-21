@@ -51,7 +51,7 @@ pub fn insert_lines(arguments: &str) -> Result<String, String> {
         .clone()
         .take(after_line as usize)
         .chain(code.lines().into_iter())
-        .chain(lines.skip(after_line as usize))
+        .chain(lines.clone().skip(after_line as usize))
         .collect::<Vec<_>>();
     fs::write(&path, new_lines.join("\n")).map_err(|err| err.to_string())?;
     println!("Code inserted!");
