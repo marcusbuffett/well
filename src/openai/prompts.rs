@@ -22,7 +22,7 @@ pub fn all_functions() -> serde_json::Value {
             "properties": {},
             "required": [],
         }},
-        {"name": "patch_file", "description": "update file contents from one line numbet to another", "parameters": {
+        {"name": "patch_file", "description": "update file contents from one line number to another, inclusive of those line numbers", "parameters": {
             "type": "object",
             "properties": {
                 "path": { "type": "string", "description": "relative path to the file" },
