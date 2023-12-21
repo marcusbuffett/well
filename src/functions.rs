@@ -3,6 +3,7 @@ use serde_json::json;
 
 mod check_for_errors;
 mod create_file;
+mod delete_lines;
 mod get_code_context;
 mod grep;
 mod list_commits;
@@ -38,14 +39,15 @@ where
 pub fn apply(name: &str, arguments: &str) -> String {
     let result = match name {
         "list_source_files" => list_source_files(),
-        "patch_file" => patch_file::patch_file(arguments),
+        "update_file" => patch_file::patch_file(arguments),
         "insert_lines" => patch_file::insert_lines(arguments),
+        "delete_lines" => delete_lines::delete_lines(arguments),
         "read_file" => read_file(arguments),
         "read_file_range" => read_file_range(arguments),
         "read_file_around" => read_file_around(arguments),
         "check_for_errors" => check_for_errors::check_for_errors(arguments),
         "create_file" => create_file::create_file(arguments),
-        "search_replace" => search_replace(arguments),
+        "search_and_replace" => search_replace(arguments),
         "get_context" => read_well_context::read_well_context(arguments),
         "grep" => grep::grep(arguments),
         _ => Err(format!("no such function: `{name}`")),

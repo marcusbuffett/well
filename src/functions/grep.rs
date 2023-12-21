@@ -4,13 +4,18 @@ pub fn grep(arguments: &str) -> Result<String, String> {
     #[derive(serde::Deserialize)]
     struct Arguments {
         query: String,
+        path: Option<String>,
     }
-
-    let Arguments { query } = serde_json::from_str(arguments).map_err(|err| err.to_string())?;
+    let Arguments { query, path } =
+        serde_json::from_str(arguments).map_err(|err| err.to_string())?;
 
     let output = Command::new("rg")
         .arg(&query)
+        .arg("--heading")
         .arg("--color=never")
+        .arg("--line-number")
+        .arg("--")
+        .arg(path.as_deref().unwrap_or("."))
         .output()
         .map_err(|err| err.to_string())?;
 
@@ -22,3 +27,4 @@ pub fn grep(arguments: &str) -> Result<String, String> {
     let results = String::from_utf8_lossy(&output.stdout);
     Ok(results.to_string())
 }
+

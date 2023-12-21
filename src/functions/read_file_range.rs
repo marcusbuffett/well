@@ -21,7 +21,7 @@ pub fn read_file_range(arguments: &str) -> Result<String, String> {
 
     let range = start_line - 1..end_line;
     let contents_with_line_numbers = range
-        .map(|i| format!("[{}] {}", i + 1, lines[i]))
+        .map(|i| format!("{}: {}", i + 1, lines[i]))
         .collect::<Vec<String>>()
         .join("\n");
 
@@ -63,7 +63,7 @@ pub fn read_file_around(arguments: &str) -> Result<String, String> {
     let range = start_line - 1..end_line;
     dbg!(&range, &start_line, &end_line);
     let contents_with_line_numbers = range
-        .map(|i| format!("[{}] {}", i + 1, lines[i]))
+        .map(|i| format!("{}: {}", i + 1, lines[i]))
         .collect::<Vec<String>>()
         .join("\n");
 
