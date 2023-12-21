@@ -9,7 +9,7 @@ pub fn say(arguments: &str) -> Result<String, String> {
 
     let Arguments { text } = serde_json::from_str(arguments).map_err(|err| err.to_string())?;
 
-    println!("Speaking out loud: {}", text);
+    // println!("Speaking out loud: {}", text);
 
     let output = Command::new("sh")
         .arg("-c")

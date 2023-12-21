@@ -26,8 +26,7 @@ pub fn delete_lines(arguments: &str) -> Result<String, String> {
         .chain(lines.skip(end_line as usize))
         .collect::<Vec<_>>();
     fs::write(&path, new_lines.join("\n")).map_err(|err| err.to_string())?;
-    println!("Lines deleted!");
+// println!("Lines deleted!");
 
     Ok("Lines deleted!".to_string())
 }
-

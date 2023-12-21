@@ -16,7 +16,7 @@ pub fn patch_file(arguments: &str) -> Result<String, String> {
         code,
     } = serde_json::from_str(arguments).map_err(|err| err.to_string())?;
 
-    println!("Patching {} from {} to {}", path, start_line, end_line);
+// println!("Patching {} from {} to {}", path, start_line, end_line);
     let contents = std::fs::read_to_string(Path::new(&path)).map_err(|err| err.to_string())?;
     let lines = contents.lines();
     let new_lines = lines
@@ -26,7 +26,7 @@ pub fn patch_file(arguments: &str) -> Result<String, String> {
         .chain(lines.skip(end_line as usize))
         .collect::<Vec<_>>();
     fs::write(&path, new_lines.join("\n")).map_err(|err| err.to_string())?;
-    println!("File patched!");
+// println!("File patched!");
 
     Ok("File patched!".to_string())
 }
@@ -44,7 +44,7 @@ pub fn insert_lines(arguments: &str) -> Result<String, String> {
         code,
     } = serde_json::from_str(arguments).map_err(|err| err.to_string())?;
 
-    println!("Inserting code into {}, after {}", path, after_line);
+// println!("Inserting code into {}, after {}", path, after_line);
     let contents = std::fs::read_to_string(Path::new(&path)).map_err(|err| err.to_string())?;
     let lines = contents.lines();
     let new_lines = lines
@@ -54,7 +54,7 @@ pub fn insert_lines(arguments: &str) -> Result<String, String> {
         .chain(lines.clone().skip(after_line as usize))
         .collect::<Vec<_>>();
     fs::write(&path, new_lines.join("\n")).map_err(|err| err.to_string())?;
-    println!("Code inserted!");
+// println!("Code inserted!");
 
     Ok("File patched!".to_string())
 }

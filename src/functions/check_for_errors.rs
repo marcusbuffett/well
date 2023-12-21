@@ -29,7 +29,7 @@ pub fn check_for_errors(arguments: &str) -> Result<String, String> {
         } else {
             Ok(output_str)
         };
-        println!("{:?}", final_output);
+// println!("{:?}", final_output);
         return final_output;
     }
 

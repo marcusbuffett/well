@@ -9,7 +9,7 @@ pub fn commit_changes(arguments: &str) -> Result<String, String> {
 
     let Arguments { message } = serde_json::from_str(arguments).map_err(|err| err.to_string())?;
 
-    println!("Staging and committing changes with message: {}", message);
+// println!("Staging and committing changes with message: {}", message);
 
     let status = Command::new("git")
         .args([&"add", "."])
@@ -29,7 +29,7 @@ pub fn commit_changes(arguments: &str) -> Result<String, String> {
         return Err("Failed to commit changes".to_string());
     }
 
-    println!("Changes committed!");
+// println!("Changes committed!");
 
     Ok("Changes committed!".to_string())
 }

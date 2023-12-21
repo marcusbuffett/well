@@ -41,7 +41,7 @@ where
 
 /// Apply a function call to the conversation.
 pub fn apply(name: &str, arguments: &str) -> String {
-    println!("applying function: `{name}`");
+    // println!("applying function: `{name}`");
     let result = match name {
         "list_source_files" => list_source_files(),
         "update_file" => patch_file::patch_file(arguments),
@@ -62,13 +62,16 @@ pub fn apply(name: &str, arguments: &str) -> String {
         _ => Err(format!("no such function: `{name}`")),
     };
     if result.is_err() {
-        eprintln!("function errored: {}", result.as_ref().unwrap_err());
+        // eprintln!("function errored: {}", result.as_ref().unwrap_err());
     } else {
-        println!("function returned: {}", result.as_ref().unwrap());
+        // println!("function returned: {}", result.as_ref().unwrap());
     }
 
     match result {
         Ok(value) => format!("{}", value),
-        Err(error) => format!("Error: {}", error),
+        Err(error) => {
+            eprintln!("Error: {}, {}, {}", error, name, arguments);
+            format!("Error: {}", error,)
+        }
     }
 }

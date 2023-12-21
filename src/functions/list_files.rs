@@ -155,7 +155,7 @@ mod test {
     #[ignore = "run manually to see output"]
     fn directory_listing_format() {
         let output = list_files_with_path(Path::new(".")).unwrap();
-        eprintln!("{}", output);
+// eprintln!("{}", output);
         assert!(false);
     }
 }
