@@ -17,6 +17,7 @@ mod review_changes;
 mod search_replace;
 mod show_commit;
 mod commit_changes;
+mod say;
 
 use read_file_range::read_file_range;
 
@@ -55,6 +56,7 @@ pub fn apply(name: &str, arguments: &str) -> String {
         "reset_file" => reset_file::reset_file(arguments),
         "review_changes" => review_changes::review_changes(arguments),
         "grep" => grep::grep(arguments),
+        "say" => say::say(arguments),
         "commit_changes" => commit_changes::commit_changes(arguments),
         _ => Err(format!("no such function: `{name}`")),
     };

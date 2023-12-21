@@ -125,5 +125,12 @@ pub fn all_functions() -> serde_json::Value {
             "properties": {},
             "required": [],
         }},
+        {"name": "say", "description": "use the say command to speak text out loud", "parameters": {
+            "type": "object",
+            "properties": {
+                "text": { "type": "string", "description": "the text to speak" }
+            },
+            "required": ["text"],
+        }},
     ])
 }
