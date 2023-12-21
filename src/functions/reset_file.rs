@@ -19,7 +19,7 @@ pub fn reset_file(arguments: &str) -> Result<String, String> {
         return Err(format!("Failed to reset file: {}", path));
     }
 
-    println!("File reset!");
+    // println!("File reset!");
 
     Ok("File reset!".to_string())
 }

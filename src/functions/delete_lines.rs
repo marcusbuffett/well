@@ -14,10 +14,10 @@ pub fn delete_lines(arguments: &str) -> Result<String, String> {
         end_line,
     } = serde_json::from_str(arguments).map_err(|err| err.to_string())?;
 
-    println!(
-        "Deleting lines {} to {} from {}",
-        start_line, end_line, path
-    );
+    // println!(
+    //     "Deleting lines {} to {} from {}",
+    //     start_line, end_line, path
+    // );
     let contents = std::fs::read_to_string(Path::new(&path)).map_err(|err| err.to_string())?;
     let lines = contents.lines();
     let new_lines = lines

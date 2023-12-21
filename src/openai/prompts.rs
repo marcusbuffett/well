@@ -17,6 +17,7 @@ Please stop and ask for help if it seems you have gone down the wrong path.
 When investigating an error, you should use read_file_around to see the broader context.
 You can review_changes at any point, to see what you've done.
 If in doubt, feel free to reset a file to revert your changes, and start over.
+The read commands will output code where each line starts with a line number.
 """#;
 
 /// List all the functions as a JSON schema understood by the model.

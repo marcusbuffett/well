@@ -1,4 +1,4 @@
-use std::{process::Command, path::Path};
+use std::{path::Path, process::Command};
 
 /// Use the `say` command to speak text out loud.
 pub fn say(arguments: &str) -> Result<String, String> {
@@ -11,12 +11,13 @@ pub fn say(arguments: &str) -> Result<String, String> {
 
     println!("Speaking out loud: {}", text);
 
-    let status = Command::new("say")
-        .arg(&text)
-        .status()
+    let output = Command::new("sh")
+        .arg("-c")
+        .arg(&format!("say '{}'", text))
+        .output()
         .map_err(|err| err.to_string())?;
 
-    if !status.success() {
+    if !output.status.success() {
         return Err(format!("Failed to speak text: {}", text));
     }
 

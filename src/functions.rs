@@ -2,6 +2,7 @@
 use serde_json::json;
 
 mod check_for_errors;
+mod commit_changes;
 mod create_file;
 mod delete_lines;
 mod get_code_context;
@@ -14,10 +15,9 @@ mod read_file_range;
 mod read_well_context;
 mod reset_file;
 mod review_changes;
+mod say;
 mod search_replace;
 mod show_commit;
-mod commit_changes;
-mod say;
 
 use read_file_range::read_file_range;
 
@@ -41,6 +41,7 @@ where
 
 /// Apply a function call to the conversation.
 pub fn apply(name: &str, arguments: &str) -> String {
+    println!("applying function: `{name}`");
     let result = match name {
         "list_source_files" => list_source_files(),
         "update_file" => patch_file::patch_file(arguments),
