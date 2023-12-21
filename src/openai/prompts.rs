@@ -15,6 +15,7 @@ If a file has a lot of lines, you'll need to use the more specific read function
 After changing a file, make sure to check the result with read_file_range or read_file_around, to ensure that the change was applied correctly.
 Please stop and ask for help if it seems you have gone down the wrong path.
 When investigating an error, you should use read_file_around to see the broader context.
+You can review_changes at any point, to see what you've done.
 If in doubt, feel free to delete your changes and start over.
 """#;
 
@@ -96,6 +97,11 @@ pub fn all_functions() -> serde_json::Value {
         }},
         {
             "name": "check_for_errors", "description": "check for errors in the codebase", "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+        }},
+        {"name": "review_changes", "description": "Review the changes made to the codebase", "parameters": {
             "type": "object",
             "properties": {},
             "required": [],
