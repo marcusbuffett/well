@@ -15,6 +15,7 @@ mod read_well_context;
 mod search_replace;
 mod show_commit;
 mod review_changes;
+mod reset_file;
 
 use read_file_range::read_file_range;
 
@@ -50,6 +51,7 @@ pub fn apply(name: &str, arguments: &str) -> String {
         "create_file" => create_file::create_file(arguments),
         "search_and_replace" => search_replace(arguments),
         "get_context" => read_well_context::read_well_context(arguments),
+"reset_file" => reset_file::reset_file(arguments),
         "review_changes" => review_changes::review_changes(arguments),
         "grep" => grep::grep(arguments),
         _ => Err(format!("no such function: `{name}`")),
