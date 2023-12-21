@@ -16,7 +16,7 @@ After changing a file, make sure to check the result with read_file_range or rea
 Please stop and ask for help if it seems you have gone down the wrong path.
 When investigating an error, you should use read_file_around to see the broader context.
 You can review_changes at any point, to see what you've done.
-If in doubt, feel free to delete your changes and start over.
+If in doubt, feel free to reset a file to revert your changes, and start over.
 """#;
 
 /// List all the functions as a JSON schema understood by the model.
@@ -27,16 +27,16 @@ pub fn all_functions() -> serde_json::Value {
             "properties": {},
             "required": [],
         }},
-        {"name": "update_file", "description": "update file contents", "parameters": {
-            "type": "object",
-            "properties": {
-                "path": { "type": "string", "description": "relative path to the file" },
-                "code": { "type": "string", "description": "the code to insert" },
-                "start_line": { "type": "number", "description": "the line number to start changing code from" },
-                "end_line": { "type": "number", "description": "the line number to stop changing code at" },
-            },
-            "required": ["path", "code", "start_line", "end_line"],
-        }},
+        // {"name": "update_file", "description": "update file contents", "parameters": {
+        //     "type": "object",
+        //     "properties": {
+        //         "path": { "type": "string", "description": "relative path to the file" },
+        //         "code": { "type": "string", "description": "the code to insert" },
+        //         "start_line": { "type": "number", "description": "the line number to start changing code from" },
+        //         "end_line": { "type": "number", "description": "the line number to stop changing code at" },
+        //     },
+        //     "required": ["path", "code", "start_line", "end_line"],
+        // }},
         {"name": "insert_lines", "description": "insert lines into a file, after a given line number", "parameters": {
             "type": "object",
             "properties": {
@@ -119,6 +119,11 @@ pub fn all_functions() -> serde_json::Value {
                 "path": { "type": "string", "description": "relative path to the file" }
             },
             "required": ["search", "replace", "path"]
+        }},
+        {"name": "commit_changes", "description": "stage and commit all changes", "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": [],
         }},
     ])
 }

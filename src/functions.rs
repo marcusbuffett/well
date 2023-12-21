@@ -12,10 +12,11 @@ mod patch_file;
 mod read_file;
 mod read_file_range;
 mod read_well_context;
+mod reset_file;
+mod review_changes;
 mod search_replace;
 mod show_commit;
-mod review_changes;
-mod reset_file;
+mod commit_changes;
 
 use read_file_range::read_file_range;
 
@@ -51,9 +52,10 @@ pub fn apply(name: &str, arguments: &str) -> String {
         "create_file" => create_file::create_file(arguments),
         "search_and_replace" => search_replace(arguments),
         "get_context" => read_well_context::read_well_context(arguments),
-"reset_file" => reset_file::reset_file(arguments),
+        "reset_file" => reset_file::reset_file(arguments),
         "review_changes" => review_changes::review_changes(arguments),
         "grep" => grep::grep(arguments),
+        "commit_changes" => commit_changes::commit_changes(arguments),
         _ => Err(format!("no such function: `{name}`")),
     };
     if result.is_err() {
@@ -62,5 +64,8 @@ pub fn apply(name: &str, arguments: &str) -> String {
         println!("function returned: {}", result.as_ref().unwrap());
     }
 
-    to_json(result).to_string()
+    match result {
+        Ok(value) => format!("{}", value),
+        Err(error) => format!("Error: {}", error),
+    }
 }
